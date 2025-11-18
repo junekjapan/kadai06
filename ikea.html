@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASA MODERNA - 高級家具オンラインストア</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: #fafafa;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #2c3e50;
+            text-transform: uppercase;
+        }
+
+        .logo strong {
+            font-weight: 700;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #2c3e50;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .cart-button {
+            background: #2c3e50;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-2px);
+            background: #1a252f;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .hero {
+            height: 85vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23d4a574" width="1200" height="600"/><path fill="%23c49563" d="M0 400 Q300 350 600 400 T1200 400 V600 H0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: #2c3e50;
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 5rem 3rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            color: #2c3e50;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 300;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 0.8rem 2rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .tab:hover, .tab.active {
+            background: #2c3e50;
+            color: white;
+            border-color: #2c3e50;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            transition: transform 0.4s, box-shadow 0.4s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .product-info {
+            padding: 2rem;
+        }
+
+        .product-category {
+            color: #95a5a6;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+        }
+
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #ecf0f1;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .price-unit {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .add-button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .add-button:hover {
+            background: #1a252f;
+            transform: scale(1.05);
+        }
+
+        .add-button:active {
+            transform: scale(0.98);
+        }
+
+        .cart-modal {
+            position: fixed;
+            right: -450px;
+            top: 0;
+            width: 450px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.2);
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-modal.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 2rem 2.5rem;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s;
+        }
+
+        .close-button:hover {
+            color: #2c3e50;
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+        }
+
+        .cart-item-category {
+            color: #95a5a6;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cart-item-price {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        .quantity-btn {
+            background: #ecf0f1;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #d5dbdb;
+        }
+
+        .quantity {
+            font-weight: 500;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-footer {
+            padding: 2rem 2.5rem;
+            border-top: 2px solid #ecf0f1;
+            background: #fafafa;
+        }
+
+        .cart-summary {
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .summary-row.total {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+        }
+
+        .checkout-button {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-button:hover {
+            background: #1a252f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #95a5a6;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 3rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            line-height: 2;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-menu {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><strong>CASA</strong> MODERNA</div>
+            <div class="nav-menu">
+                <a href="#home">ホーム</a>
+                <a href="#products">商品</a>
+                <a href="#about">ブランド</a>
+                <a href="#contact">お問い合わせ</a>
+                <div class="cart-button" onclick="toggleCart()">
+                    カート
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>上質な暮らしを、あなたに</h1>
+            <p>こだわりの家具で、理想の空間を創造する</p>
+            <button class="cta-button" onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+                コレクションを見る
+            </button>
+        </div>
+    </section>
+
+    <div class="container" id="products">
+        <div class="section-header">
+            <h2 class="section-title">家具コレクション</h2>
+            <p class="section-subtitle">上質な素材と洗練されたデザイン</p>
+        </div>
+
+        <div class="category-tabs">
+            <div class="tab active" onclick="filterProducts('all')">すべて</div>
+            <div class="tab" onclick="filterProducts('リビング')">リビング</div>
+            <div class="tab" onclick="filterProducts('ダイニング')">ダイニング</div>
+            <div class="tab" onclick="filterProducts('ベッドルーム')">ベッドルーム</div>
+            <div class="tab" onclick="filterProducts('書斎')">書斎</div>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>ショッピングカート</h2>
+            <button class="close-button" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-content" id="cartContent">
+            <div class="empty-cart">
+                <div class="empty-cart-icon">🛋️</div>
+                <p>カートに商品がありません</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>小計</span>
+                    <span id="subtotal">¥0</span>
+                </div>
+                <div class="summary-row">
+                    <span>配送料</span>
+                    <span>¥0</span>
+                </div>
+                <div class="summary-row total">
+                    <span>合計</span>
+                    <span id="total">¥0</span>
+                </div>
+            </div>
+            <button class="checkout-button" onclick="checkout()">ご購入手続きへ</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CASA MODERNA</h3>
+                <p>上質な家具で、あなたの理想の空間を創造します。厳選された素材と職人の技術が生み出す、時代を超えるデザイン。</p>
+            </div>
+            <div class="footer-section">
+                <h3>カスタマーサービス</h3>
+                <p><a href="#">配送について</a></p>
+                <p><a href="#">返品・交換</a></p>
+                <p><a href="#">よくある質問</a></p>
+                <p><a href="#">お問い合わせ</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>会社情報</h3>
+                <p><a href="#">私たちについて</a></p>
+                <p><a href="#">ショールーム</a></p>
+                <p><a href="#">採用情報</a></p>
+                <p><a href="#">プライバシーポリシー</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CASA MODERNA. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name: 'モダンソファ 3人掛け', category: 'リビング', price: 198000, emoji: '🛋️', description: 'イタリアンレザーを使用した高級ソファ。座り心地と耐久性を両立。', tag: '人気' },
+            { id: 2, name: 'ダイニングテーブル', category: 'ダイニング', price: 145000, emoji: '🪑', description: '無垢材のウォールナットテーブル。6人掛け対応。', tag: '新作' },
+            { id: 3, name: 'キングサイズベッド', category: 'ベッドルーム', price: 285000, emoji: '🛏️', description: '最高級のマットレス付き。極上の睡眠体験を。', tag: 'プレミアム' },
+            { id: 4, name: 'エグゼクティブデスク', category: '書斎', price: 168000, emoji: '🖥️', description: 'オーク材の重厚なデスク。収納力と機能性を兼備。', tag: '人気' },
+            { id: 5, name: 'ラウンジチェア', category: 'リビング', price: 98000, emoji: '🪑', description: 'デザイナーズチェアの傑作。くつろぎの時間を演出。', tag: '限定' },
+            { id: 6, name: 'サイドボード', category: 'ダイニング', price: 125000, emoji: '🗄️', description: 'シンプルで洗練された収納家具。北欧デザイン。', tag: '新作' },
+            { id: 7, name: 'ドレッサーセット', category: 'ベッドルーム', price: 115000, emoji: '💄', description: '大きな鏡と収納スペースを備えた実用的なドレッサー。', tag: '' },
+            { id: 8, name: 'ブックシェルフ', category: '書斎', price: 88000, emoji: '📚', description: '大容量の本棚。モジュール式で自由にカスタマイズ可能。', tag: '' },
+        ];
+
+        let cart = [];
+        let currentFilter = 'all';
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('productsGrid');
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+            
+            grid.innerHTML = filtered.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.emoji}
+                        ${product.tag ? `<div class="product-tag">${product.tag}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-unit">¥</span>${product.price.toLocaleString()}
+                            </div>
+                            <button class="add-button" onclick="addToCart(${product.id})">
+                                カートに追加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(category);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartContent = document.getElementById('cartContent');
+            const cartFooter = document.getElementById('cartFooter');
+            const subtotal = document.getElementById('subtotal');
+            const total = document.getElementById('total');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛋️</div>
+                        <p>カートに商品がありません</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+            } else {
+                cartContent.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">${item.emoji}</div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-category">${item.category}</div>
+                            <div class="cart-item-price">¥${item.price.toLocaleString()}</div>
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                subtotal.textContent = `¥${totalPrice.toLocaleString()}`;
+                total.textContent = `¥${totalPrice.toLocaleString()}`;
+                cartFooter.style.display = 'block';
+            }
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('open');
+        }
+
+        function checkout() {
+            alert('ご購入手続きページへ移動します。\n\n合計金額: ' + document.getElementById('total').textContent + '\n\n（このデモでは実際の決済は行われません）');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
